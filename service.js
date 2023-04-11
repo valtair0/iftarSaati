@@ -1,13 +1,15 @@
 const puppeteer = require("puppeteer");
-const timeLeft = require("./main");
+const timeLeft = require("./CalculateTime");
 const { spawn } = require("child_process");
+
+const currentFolderPath = __dirname;
 
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080 });
 
-  await page.goto("file://C:/Users/Mert/Desktop/iftar/index.html");
+  await page.goto("file://" + currentFolderPath + "/index.html");
 
   const canvas = await page.$("#canvas");
 
@@ -28,7 +30,7 @@ const { spawn } = require("child_process");
 
     await page.screenshot({ path: "screenshot.png" }, { fullPage: true });
     const pythonProcess = spawn("python", [
-      "C:/Users/Mert/Desktop/iftar/changewallpaper.py",
+      currentFolderPath + "/changewallpaper.py",
     ]);
   }
 
